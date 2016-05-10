@@ -128,6 +128,9 @@ if [ -f etc/cups/cupsd.conf ]; then
 	sed -i "s/^SystemGroup sys root/SystemGroup sys root wheel/" etc/cups/cupsd.conf
 fi
 
+# enable ntp servers
+sed -i "s/^#server \(.*\) iburst/server \1 iburst/" etc/ntp.conf
+
 # Make sure the root user password is disabled
 chroot . passwd -l root
 }
