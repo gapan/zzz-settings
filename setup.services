@@ -71,12 +71,20 @@ if [ -r etc/rc.d/rc.mysqld ]; then
 	chmod -x etc/rc.d/rc.mysqld
 fi
 
+if [ -r etc/rc.d/rc.networkmanager ]; then
+	chmod +x etc/rc.d/rc.networkmanager
+fi
+
 if [ -r etc/rc.d/rc.ntpd ]; then
 	chmod +x etc/rc.d/rc.ntpd
 fi
 
 if [ -r etc/rc.d/rc.pcmcia ]; then
 	chmod -x etc/rc.d/rc.pcmcia
+fi
+
+if [ -r etc/rc.d/rc.pulseaudio ]; then
+	chmod +x etc/rc.d/rc.pulseaudio
 fi
 
 if [ -r etc/rc.d/rc.rpc ]; then
