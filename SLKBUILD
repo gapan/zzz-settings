@@ -1,0 +1,151 @@
+#Maintainer: George Vlahavas <vlahavas~at~gmail~dot~com>
+
+pkgname=zzz-settings
+pkgver=14.1
+pkgrel=6gv
+arch=noarch
+source=('setup.services')
+options=('noextract' 'nosrcpack')
+
+doinst() {
+# Somehow this doesn't seem to work from /var/log/setup/setup.htmlview
+rm -f usr/bin/htmlview
+cat << EOF > usr/bin/htmlview
+#!/bin/sh
+exec xdg-open "\$@"
+EOF
+chmod 755 usr/bin/htmlview
+
+# We don't want a window asking this, default is whatever is in the cd
+rm -f var/log/setup/setup.xwmconfig
+if [ -f etc/X11/xinit/xinitrc.xfce ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.xfce etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.mate ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.mate etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.kde ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.kde etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.gnome ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.gnome etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.lxde ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.lxde etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.openbox ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.openbox etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.e16 ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.e16 etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.fluxbox ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.fluxbox etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.icewm ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.icewm etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.windowmaker ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.windowmaker etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.pekwm ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.pekwm etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.jwm ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.jwm etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.icewm ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.icewm etc/X11/xinit/xinitrc
+elif [ -f etc/X11/xinit/xinitrc.ratpoison ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.ratpoison etc/X11/xinit/xinitrc
+fi
+
+# Fix txz icon
+#if [ -d usr/share/icons/Tango ]; then
+#	rm -f usr/share/icons/Tango/{scalable,32x32,24x24,22x22,16x16}/mimetypes/gnome-mime-application-x-xz-compressed-tar.{svg,png}
+#	( cd usr/share/icons/Tango/scalable/mimetypes; ln -s package-x-generic.svg gnome-mime-application-x-xz-compressed-tar.svg )
+#	( cd usr/share/icons/Tango/32x32/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
+#	( cd usr/share/icons/Tango/24x24/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
+#	( cd usr/share/icons/Tango/22x22/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
+#	( cd usr/share/icons/Tango/16x16/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
+#fi
+
+if [ ! -x usr/bin/Xorg ]; then
+	sed -i "s/id:.:initdefault/id:3:initdefault/" etc/inittab
+fi
+
+if [ -d usr/share/icons/obsidian-cursors ]; then
+	( cd usr/share/icons; ln -sf obsidian-cursors default )
+elif [ -d usr/share/icons/Oxygen_Black ]; then
+	( cd usr/share/icons; ln -sf Oxygen_Black default )
+fi
+
+[ -f etc/rc.d/rc.font.new ] && rm -f etc/rc.d/rc.font.new
+
+if [ ! -f etc/rc.d/rc.keymap ]; then
+	echo "#!/bin/sh" > etc/rc.d/rc.keymap
+	echo "# Load the keyboard map.  More maps are in /usr/share/kbd/keymaps." >> etc/rc.d/rc.keymap
+	echo "if [ -x /usr/bin/loadkeys ]; then" >> etc/rc.d/rc.keymap
+	echo " /usr/bin/loadkeys -u us.map" >> etc/rc.d/rc.keymap
+	echo "fi" >> etc/rc.d/rc.keymap
+	chmod 755 etc/rc.d/rc.keymap
+fi
+
+if [ ! -h sbin/mkfs.msdos ]; then
+	(
+	cd sbin
+	ln -sf mkdosfs mkfs.msdos
+	)
+fi
+
+mv etc/rc.d/rc.services.new etc/rc.d/rc.services 2> /dev/null
+
+if [ -f usr/share/applications/kde4/kplatowork.desktop ]; then
+	sed -i "s/^Categories=.*/Categories=Qt;KDE;Office;/" usr/share/applications/kde4/kplatowork.desktop
+fi
+
+# make gamin use kernel notifications for file updates instead of polling
+if [ -f etc/gamin/gaminrc ]; then
+	sed -i "s/poll 15/kernel/" etc/gamin/gaminrc
+fi
+
+# this fixes problems with dialup connections
+(
+cd etc/ppp
+ln -sf ../resolv.conf resolv.conf
+)
+
+# fix xscreensaver locking screen (only if gdm is installed)
+if [ -x usr/bin/gdmflexiserver ]; then
+	sed -i "s/^\*newLoginCommand:.*/\*newLoginCommand:   gdmflexiserver -ls/" \
+		etc/X11/app-defaults/XScreenSaver
+fi
+
+# allow anyone in the wheel group to have access to CUPS administration
+if [ -f etc/cups/cupsd.conf ]; then
+	sed -i "s/^SystemGroup sys root/SystemGroup sys root wheel/" etc/cups/cupsd.conf
+fi
+
+# Make sure the root user password is disabled
+chroot . passwd -l root
+}
+
+slackdesc=\
+(
+#|-----handy-ruler------------------------------------------------------|
+"zzz-settings (provides system wide fixes for several packages)"
+"This package provides fixes for some packages and default settings for"
+"others. It can safely be removed after installation, but it should"
+"never be installed or upgraded by the user, or it might change some"
+"default system settings."
+)
+
+
+build() {
+	mkdir -p $startdir/pkg/var/log/setup
+	cp $startdir/src/setup.services $startdir/pkg/var/log/setup/
+	chmod 755 $startdir/pkg/var/log/setup/setup.services
+	chown -R root:root $startdir/pkg
+} 

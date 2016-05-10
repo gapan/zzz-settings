@@ -1,0 +1,120 @@
+#!/bin/sh
+# set default running Salix system services after installation
+# 2009-08-11: v0.1 initial version
+
+TMP=/var/log/setup/tmp
+if [ ! -d $TMP ]; then
+  mkdir -p $TMP
+fi
+T_PX="$1"
+cd $T_PX
+rm -f $TMP/tmpscript
+
+
+if [ -r etc/rc.d/rc.alsa ]; then
+	chmod +x etc/rc.d/rc.alsa
+fi
+
+if [ -r etc/rc.d/rc.atalk ]; then
+	chmod -x etc/rc.d/rc.atalk
+fi
+
+if [ -r etc/rc.d/rc.bind ]; then
+	chmod -x etc/rc.d/rc.bind
+fi
+
+if [ -r etc/rc.d/rc.bluetooth ]; then
+	chmod +x etc/rc.d/rc.bluetooth
+fi
+
+if [ -r etc/rc.d/rc.cups ]; then
+	chmod +x etc/rc.d/rc.cups
+fi
+
+if [ -r etc/rc.d/rc.dnsmasq ]; then
+	chmod -x etc/rc.d/rc.dnsmasq
+fi
+
+if [ -r etc/rc.d/rc.fuse ]; then
+	chmod +x etc/rc.d/rc.fuse
+fi
+
+if [ -r etc/rc.d/rc.hald ]; then
+	chmod +x etc/rc.d/rc.hald
+fi
+
+if [ -r etc/rc.d/rc.hplip ]; then
+	chmod -x etc/rc.d/rc.hplip
+fi
+
+if [ -r etc/rc.d/rc.httpd ]; then
+	chmod -x etc/rc.d/rc.httpd
+fi
+
+if [ -r etc/rc.d/rc.inetd ]; then
+	chmod -x etc/rc.d/rc.inetd
+fi
+
+if [ -r etc/rc.d/rc.ip_forward ]; then
+	chmod -x etc/rc.d/rc.ip_forward
+fi
+
+if [ -r etc/rc.d/rc.lprng ]; then
+	chmod -x etc/rc.d/rc.lprng
+fi
+
+if [ -r etc/rc.d/rc.messagebus ]; then
+	chmod +x etc/rc.d/rc.messagebus
+fi
+
+if [ -r etc/rc.d/rc.mysqld ]; then
+	chmod -x etc/rc.d/rc.mysqld
+fi
+
+if [ -r etc/rc.d/rc.ntpd ]; then
+	chmod +x etc/rc.d/rc.ntpd
+fi
+
+if [ -r etc/rc.d/rc.pcmcia ]; then
+	chmod -x etc/rc.d/rc.pcmcia
+fi
+
+if [ -r etc/rc.d/rc.rpc ]; then
+	chmod -x etc/rc.d/rc.rpc
+fi
+
+if [ -r etc/rc.d/rc.samba ]; then
+	chmod -x etc/rc.d/rc.samba
+fi
+
+if [ -r etc/rc.d/rc.saslauthd ]; then
+	chmod -x etc/rc.d/rc.saslauthd
+fi
+
+if [ -r etc/rc.d/rc.sendmail ]; then
+	chmod -x etc/rc.d/rc.sendmail
+fi
+
+if [ -r etc/rc.d/rc.serial ]; then
+	chmod +x etc/rc.d/rc.serial
+fi
+
+if [ -r etc/rc.d/rc.snmpd ]; then
+	chmod -x etc/rc.d/rc.snmpd
+fi
+
+if [ -r etc/rc.d/rc.syslog ]; then
+	chmod +x etc/rc.d/rc.syslog
+fi
+
+if [ -r etc/rc.d/rc.sshd ]; then
+	chmod -x etc/rc.d/rc.sshd
+fi
+
+if [ -r etc/rc.d/rc.wicd ]; then
+	chmod +x etc/rc.d/rc.wicd
+fi
+
+if [ -r etc/rc.d/rc.wireless ]; then
+	chmod +x etc/rc.d/rc.wireless
+fi
