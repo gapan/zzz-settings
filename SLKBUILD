@@ -69,16 +69,6 @@ elif [ -f etc/X11/xinit/xinitrc.openbox ];then
 	echo "Openbox" > etc/salix-edition
 fi
 
-# Fix txz icon
-#if [ -d usr/share/icons/Tango ]; then
-#	rm -f usr/share/icons/Tango/{scalable,32x32,24x24,22x22,16x16}/mimetypes/gnome-mime-application-x-xz-compressed-tar.{svg,png}
-#	( cd usr/share/icons/Tango/scalable/mimetypes; ln -s package-x-generic.svg gnome-mime-application-x-xz-compressed-tar.svg )
-#	( cd usr/share/icons/Tango/32x32/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
-#	( cd usr/share/icons/Tango/24x24/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
-#	( cd usr/share/icons/Tango/22x22/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
-#	( cd usr/share/icons/Tango/16x16/mimetypes; ln -s package-x-generic.png gnome-mime-application-x-xz-compressed-tar.png )
-#fi
-
 if [ ! -x usr/bin/Xorg ]; then
 	sed -i "s/id:.:initdefault/id:3:initdefault/" etc/inittab
 fi
