@@ -17,49 +17,56 @@ EOF
 chmod 755 usr/bin/htmlview
 
 # We don't want a window asking this, default is whatever is in the cd
+# At the same time, add the salix-edition file
 rm -f var/log/setup/setup.xwmconfig
 if [ -f etc/X11/xinit/xinitrc.xfce ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.xfce etc/X11/xinit/xinitrc
+	echo "Xfce" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.mate ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.mate etc/X11/xinit/xinitrc
+	echo "MATE" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.kde ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.kde etc/X11/xinit/xinitrc
-elif [ -f etc/X11/xinit/xinitrc.gnome ];then
-	unlink etc/X11/xinit/xinitrc
-	cp -f etc/X11/xinit/xinitrc.gnome etc/X11/xinit/xinitrc
+	echo "KDE" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.lxde ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.lxde etc/X11/xinit/xinitrc
-elif [ -f etc/X11/xinit/xinitrc.openbox ];then
-	unlink etc/X11/xinit/xinitrc
-	cp -f etc/X11/xinit/xinitrc.openbox etc/X11/xinit/xinitrc
+	echo "LXDE" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.e16 ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.e16 etc/X11/xinit/xinitrc
+	echo "e16" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.fluxbox ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.fluxbox etc/X11/xinit/xinitrc
+	echo "Fluxbox" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.icewm ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.icewm etc/X11/xinit/xinitrc
+	echo "IceWM" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.windowmaker ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.windowmaker etc/X11/xinit/xinitrc
+	echo "WindowMaker" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.pekwm ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.pekwm etc/X11/xinit/xinitrc
+	echo "PekWM" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.jwm ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.jwm etc/X11/xinit/xinitrc
-elif [ -f etc/X11/xinit/xinitrc.icewm ];then
-	unlink etc/X11/xinit/xinitrc
-	cp -f etc/X11/xinit/xinitrc.icewm etc/X11/xinit/xinitrc
+	echo "JWM" > etc/salix-edition
 elif [ -f etc/X11/xinit/xinitrc.ratpoison ];then
 	unlink etc/X11/xinit/xinitrc
 	cp -f etc/X11/xinit/xinitrc.ratpoison etc/X11/xinit/xinitrc
+	echo "Ratpoison" > etc/salix-edition
+elif [ -f etc/X11/xinit/xinitrc.openbox ];then
+	unlink etc/X11/xinit/xinitrc
+	cp -f etc/X11/xinit/xinitrc.openbox etc/X11/xinit/xinitrc
+	echo "Openbox" > etc/salix-edition
 fi
 
 # Fix txz icon
