@@ -31,6 +31,14 @@ if [ -r etc/rc.d/rc.cups ]; then
 	chmod +x etc/rc.d/rc.cups
 fi
 
+if [ -r etc/rc.d/rc.cgmanager ]; then
+	chmod -x etc/rc.d/rc.cgmanager
+fi
+
+if [ -r etc/rc.d/rc.cgproxy ]; then
+	chmod -x etc/rc.d/rc.cgproxy
+fi
+
 if [ -r etc/rc.d/rc.dnsmasq ]; then
 	chmod -x etc/rc.d/rc.dnsmasq
 fi
