@@ -12,7 +12,7 @@ rm -f $TMP/tmpscript
 
 
 if [ -r etc/rc.d/rc.alsa ]; then
-	chmod +x etc/rc.d/rc.alsa
+	chmod -x etc/rc.d/rc.alsa
 fi
 
 if [ -r etc/rc.d/rc.atalk ]; then
@@ -92,7 +92,7 @@ if [ -r etc/rc.d/rc.pcmcia ]; then
 fi
 
 if [ -r etc/rc.d/rc.pulseaudio ]; then
-	chmod +x etc/rc.d/rc.pulseaudio
+	chmod -x etc/rc.d/rc.pulseaudio
 fi
 
 if [ -r etc/rc.d/rc.rpc ]; then
