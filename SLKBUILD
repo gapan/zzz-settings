@@ -2,7 +2,7 @@
 
 pkgname=zzz-settings
 pkgver=14.2
-pkgrel=2gv
+pkgrel=3gv
 arch=noarch
 source=('setup.services')
 options=('noextract' 'nosrcpack')
