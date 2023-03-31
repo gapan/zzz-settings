@@ -1,8 +1,8 @@
 #Maintainer: George Vlahavas <vlahavas~at~gmail~dot~com>
 
 pkgname=zzz-settings
-pkgver=14.2
-pkgrel=4gv
+pkgver=15.0
+pkgrel=5gv
 arch=noarch
 source=('setup.services')
 options=('noextract' 'nosrcpack')
@@ -75,7 +75,9 @@ if [ ! -x usr/bin/Xorg ]; then
 	sed -i "s/id:.:initdefault/id:3:initdefault/" etc/inittab
 fi
 
-if [ -d usr/share/icons/obsidian-cursors ]; then
+if [ -d usr/share/icons/Qogir ]; then
+	( cd usr/share/icons; ln -sf Qogir default )
+elif [ -d usr/share/icons/obsidian-cursors ]; then
 	( cd usr/share/icons; ln -sf obsidian-cursors default )
 elif [ -d usr/share/icons/Oxygen_Black ]; then
 	( cd usr/share/icons; ln -sf Oxygen_Black default )
@@ -116,19 +118,33 @@ cd etc/ppp
 ln -sf ../resolv.conf resolv.conf
 )
 
-# fix xscreensaver locking screen (only if gdm is installed)
-if [ -x usr/bin/gdmflexiserver ]; then
-	sed -i "s/^\*newLoginCommand:.*/\*newLoginCommand:   gdmflexiserver -ls/" \
-		etc/X11/app-defaults/XScreenSaver
-fi
-
 # allow anyone in the wheel group to have access to CUPS administration
-if [ -f etc/cups/cupsd.conf ]; then
-	sed -i "s/^SystemGroup sys root/SystemGroup sys root wheel/" etc/cups/cupsd.conf
+if [ -f etc/cups/cups-files.conf ]; then
+	sed -i "s/^SystemGroup sys root/SystemGroup sys root wheel/" etc/cups/cups-files.conf
 fi
 
 # enable ntp servers
 sed -i "s/^#server \(.*\) iburst/server \1 iburst/" etc/ntp.conf
+
+# use pipewire instead of pulseaudio if it's installed
+if [ -x usr/sbin/pipewire-enable.sh ]; then
+	chroot . usr/sbin/pipewire-enable.sh
+fi
+
+# vim/neovim/elvis symlinks
+(
+ cd usr/bin
+ if [ -x nvim ]; then
+   ln -s nvim vi
+   ln -s nvim ex
+ elif [ -x vim ]; then
+   ln -s vim vi
+   ln -s vim ex
+ elif [ -x elvis ]; then
+   ln -s elvis vi
+   ln -s elvis ex
+ fi
+)
 
 # Make sure the root user password is disabled
 chroot . passwd -l root
